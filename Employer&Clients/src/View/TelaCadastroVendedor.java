@@ -5,6 +5,11 @@
  */
 package View;
 
+import Conexoes.CriarTabelaVendedores;
+import Entidades.Vendedores;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author julio
@@ -31,7 +36,6 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNascimento = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -45,6 +49,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         txtRG = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         txtCPF = new javax.swing.JFormattedTextField();
+        txtNascimento = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         txtRua = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -57,7 +62,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jVendedor = new javax.swing.JTable();
 
         setClosable(true);
         setTitle("Cadastro de Vendedores");
@@ -67,17 +72,6 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         jLabel1.setText("Nome");
 
         jLabel2.setText("Data de nascimento");
-
-        try {
-            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNascimentoActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Email");
 
@@ -116,6 +110,11 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        txtRG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRGActionPerformed(evt);
+            }
+        });
 
         jLabel12.setText("CPF");
 
@@ -127,6 +126,17 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         txtCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCPFActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNascimentoActionPerformed(evt);
             }
         });
 
@@ -160,8 +170,10 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
                             .addComponent(txtNome))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(3, 3, 3))
+                            .addComponent(txtNascimento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -185,9 +197,9 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -231,7 +243,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Estado");
 
-        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Acre - AC", "Alagoas - AL", "Amapá - AP", "Amazonas - AM", "Bahia  - BA", "Ceará - CE", "Distrito Federal  - DF", "Espírito Santo - ES", "Goiás - GO", "Maranhão - MA", "Mato Grosso - MT", "Mato Grosso do Sul - MS", "Minas Gerais - MG", "Pará - PA", "Paraíba - PB", "Paraná - PR", "Pernambuco - PE", "Piauí - PI", "Rio de Janeiro - RJ", "Rio Grande do Norte - RN", "Rio Grande do Sul - RS", "Rondônia - RO", "Roraima - RR", "Santa Catarina - SC", "São Paulo - SP", "Sergipe - SE", "Tocantins - TO", " ", " ", " " }));
+        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         txtEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEstadoActionPerformed(evt);
@@ -321,7 +333,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -329,7 +341,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
                 "Nome", "Data de nascimento", "Telefone - 1", "Telefone - 2", "Email", "RG", "CPF", "Observação", "Rua", "Bairro", "Cidade", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jVendedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -354,12 +366,77 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNascimentoActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+
+        if (txtNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha o Nome corretamente!");
+            
+        }else if(txtNascimento.getText().equals("  /  /    ")){
+            txtNascimento.setText("Não informado");
+      
+        }else if(txtTelefone1.getText().equals("(  )      -    ")){
+            JOptionPane.showMessageDialog(null, "Preencha o Telefone 1 corretamente!");
+            
+        }else if(txtTelefone2.getText().equals("(  )      -    ")){
+           txtTelefone2.setText("(00) 00000-0000");
+           
+        }else if(txtEmail.getText().equals("")){
+           txtEmail.setText("Não informado");
+           
+        }
+        else if (txtRG.getText().equals(" .   .   ")){
+            JOptionPane.showMessageDialog(null, "Preencha o RG corretamente!");
+            
+        }else if (txtCPF.getText().equals("   .   .   -  ")){
+            JOptionPane.showMessageDialog(null, "Preencha o CPF corretamente!");
+            
+        }else if(txtObservacao.getText().equals("")){
+           txtObservacao.setText("Não informado");
+           
+        }
+        else if(txtRua.getText().equals("")){
+           txtRua.setText("Não informado");
+           
+         
+        }else if(txtBairro.getText().equals("")){
+           txtBairro.setText("Não informado");
+           
+         
+        }else if(txtCidade.getText().equals("")){
+           txtCidade.setText("Não informado");
+           
+        }
+        else if(txtEstado.getSelectedItem().toString().equals("Selecione")){
+           txtEstado.getModel().setSelectedItem("Não informado");
+           
+         
+        }
+        else{
+            DefaultTableModel dtmVendedores = (DefaultTableModel) jVendedor.getModel();
+            
+            Object[] dados = {txtNome.getText(),txtNascimento.getText(),
+            txtTelefone1.getText(),txtTelefone2.getText(),txtEmail.getText(),
+            txtRG.getText(),txtCPF.getText(),txtObservacao.getText(),
+            txtRua.getText(),txtBairro.getText(),txtCidade.getText(),
+            txtEstado.getSelectedItem().toString()
+        };
+             
+        CriarTabelaVendedores criarTabelaVendedores = new CriarTabelaVendedores();
+        criarTabelaVendedores.criarTabelaVendedores();
+        
+        Vendedores Vendedores = new Vendedores (
+            0,
+            txtNome.getText(),txtNascimento.getText(),
+            txtTelefone1.getText(),txtTelefone2.getText(),txtEmail.getText(),
+            txtRG.getText(),txtCPF.getText(),txtObservacao.getText(),
+            txtRua.getText(),txtBairro.getText(),txtCidade.getText(),
+            txtEstado.getSelectedItem().toString()
+        );
+        
+        criarTabelaVendedores.insert(Vendedores);
+        dtmVendedores.addRow(dados);
+            
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRuaActionPerformed
@@ -377,6 +454,14 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
     private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCPFActionPerformed
+
+    private void txtRGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRGActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRGActionPerformed
+
+    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNascimentoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -398,7 +483,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jVendedor;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCPF;
     private javax.swing.JTextField txtCidade;

@@ -19,142 +19,14 @@ public class TelaMenu extends javax.swing.JFrame {
      * Creates new form TelaMenu
      */
     
-    private final ConexaoSQLite conexaoSQLite;
-    
-    public TelaMenu(ConexaoSQLite pConexaoSQLite){
-        this.conexaoSQLite = pConexaoSQLite;
-    }
-
-        public void criarTabelaUsuario(){
-            String sql1 = "CREATE TABLE IF NOT EXISTS Usuarios"
-                    + "("
-                    + "ID integer PRIMARY KEY,"
-                    + "Login text NOT NULL,"
-                    + "Senha text NOT NULL"
-                    + ");";
-           
-//            executando o sql de criar tabelas
-
-        boolean conectou = false;
-        
-        try {
-           conectou = this.conexaoSQLite.conectar();
-           
-           Statement stmt = this.conexaoSQLite.criarStatement();
-           
-           stmt.execute(sql1);
-           
-           System.out.println("Tabela Usuários!");
-           
-        }catch(SQLException e){
-            //mensagem de erro na criacao da tabela
-            
-        }finally {
-            if(conectou){
-                this.conexaoSQLite.desconectar();
-            }
-        }
-            
-        }
-        
-         public void criarTabelaVendedores(){
-               String sql2 = "CREATE TABLE IF NOT EXISTS Vendedores"
-                    + "("
-                    + "ID integer PRIMARY KEY,"
-                    + "txtNome text NOT NULL,"
-                    + "txtNascimento text NOT NULL,"
-                    + "txtTelefone1 text NOT NULL,"
-                    + "txtTelefone2 text NOT NULL,"
-                    + "txtEmail text NOT NULL,"
-                    + "txtRG text NOT NULL,"
-                    + "txtCPF text NOT NULL,"
-                    + "txtObservacao text NOT NULL,"
-                    + "txtRua text NOT NULL,"
-                    + "txtBairro text NOT NULL,"
-                    + "txtCidade text NOT NULL,"
-                    + "txtEstado text NOT NULL"
-                    + ");";
-           
-//            executando o sql de criar tabelas
-
-        boolean conectou = false;
-        
-        try {
-           conectou = this.conexaoSQLite.conectar();
-           
-           Statement stmt = this.conexaoSQLite.criarStatement();
-           
-           stmt.execute(sql2);
-           
-           System.out.println("Tebela Vendedores!");
-           
-        }catch(SQLException e){
-            //mensagem de erro na criacao da tabela
-            
-        }finally {
-            if(conectou){
-                this.conexaoSQLite.desconectar();
-            }
-        }
-            
-        }
-         
-         public void criarTabelaClientes(){
-                String sql3 = "CREATE TABLE IF NOT EXISTS Clientes"
-                    + "("
-                    + "ID integer PRIMARY KEY,"
-                    + "txtNome text NOT NULL,"
-                    + "txtNascimento text NOT NULL,"
-                    + "txtTelefone1 text NOT NULL,"
-                    + "txtTelefone2 text NOT NULL,"
-                    + "txtEmail text NOT NULL,"
-                    + "txtObservacao text NOT NULL,"
-                    + "txtDiaria text NOT NULL,"
-                    + "txtValorMensalidade text NOT NULL,"
-                    + "txtDataCobranca text NOT NULL,"
-                    + "txtVendedor text NOT NULL,"
-                    + "txtDataVendaContrato text NOT NULL,"
-                    + "txtNumeroContrato text NOT NULL,"
-                    + "txtRua text NOT NULL,"
-                    + "txtBairro text NOT NULL,"
-                    + "txtCidade text NOT NULL,"
-                    + "txtEstado text NOT NULL"
-                    + ");";
-           
-//            executando o sql de criar tabelas
-
-        boolean conectou = false;
-        
-        try {
-           conectou = this.conexaoSQLite.conectar();
-           
-           Statement stmt = this.conexaoSQLite.criarStatement();
-           
-           stmt.execute(sql3);
-           
-           System.out.println("Tabela Clientes");
-           
-        }catch(SQLException e){
-            //mensagem de erro na criacao da tabela
-            
-        }finally {
-            if(conectou){
-                this.conexaoSQLite.desconectar();
-            }
-        }
-            
-        }
-        
-        //        
+  
 
    
   
     public TelaMenu() {
         initComponents();
         TelaLogin iniciar = new TelaLogin(this,true);
-        iniciar.setVisible(true);
-        
-         
+        iniciar.setVisible(true);  
     }
 
     /**
@@ -168,6 +40,11 @@ public class TelaMenu extends javax.swing.JFrame {
 
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
@@ -178,12 +55,24 @@ public class TelaMenu extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenuItem5.setText("jMenuItem5");
 
         jMenuItem6.setText("jMenuItem6");
+
+        jMenu5.setText("File");
+        jMenuBar2.add(jMenu5);
+
+        jMenu6.setText("Edit");
+        jMenuBar2.add(jMenu6);
+
+        jMenuItem9.setText("jMenuItem9");
+
+        jMenuItem10.setText("jMenuItem10");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu");
@@ -199,10 +88,10 @@ public class TelaMenu extends javax.swing.JFrame {
             .addGap(0, 926, Short.MAX_VALUE)
         );
 
-        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/folder_user.png"))); // NOI18N
+        jMenu4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/group_add.png"))); // NOI18N
         jMenu4.setText("Usuários");
 
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/folder_add.png"))); // NOI18N
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/group_edit.png"))); // NOI18N
         jMenuItem8.setText("Cadastrar Usuário");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -258,6 +147,20 @@ public class TelaMenu extends javax.swing.JFrame {
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/book_open.png"))); // NOI18N
+        jMenu7.setText("Relátorios");
+
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/page_red.png"))); // NOI18N
+        jMenuItem11.setText("Gerar relatório");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jMenu7.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu7);
 
         jMenu3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/book.png"))); // NOI18N
         jMenu3.setText("Sobre");
@@ -328,7 +231,7 @@ public class TelaMenu extends javax.swing.JFrame {
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
 
-        TelaConsultaVendedor telaConsultaVendedor = new TelaConsultaVendedor();
+        TelaConsultarVendedor telaConsultaVendedor = new TelaConsultarVendedor();
         jMenu.add(telaConsultaVendedor);
         telaConsultaVendedor.setVisible(true);
 
@@ -350,6 +253,15 @@ public class TelaMenu extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+
+        TelaGerarRelatorio telaGerarRelatorio = new TelaGerarRelatorio();
+        jMenu.add(telaGerarRelatorio);
+        telaGerarRelatorio.setVisible(true);
+
+
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,8 +304,14 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -401,5 +319,6 @@ public class TelaMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     // End of variables declaration//GEN-END:variables
 }

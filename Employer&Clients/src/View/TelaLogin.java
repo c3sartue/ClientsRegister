@@ -6,6 +6,11 @@
 package View;
 
 import Conexoes.ConexaoSQLite;
+import Conexoes.CriarTabelaClientes;
+import Conexoes.CriarTabelaUsuarios;
+import Conexoes.CriarTabelaVendedores;
+import Entidades.Usuarios;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +22,13 @@ public class TelaLogin extends javax.swing.JDialog {
     /**
      * Creates new form TelaLogin
      */
+    public String Login;
     
+    public boolean checkLogin(String Login, String senha){
+        CriarTabelaUsuarios dao = new CriarTabelaUsuarios();
+        
+        return dao.checkUser(Login, senha) >= 1;
+    }
     
         
     
@@ -30,11 +41,21 @@ public class TelaLogin extends javax.swing.JDialog {
         this.setDefaultCloseOperation(0);
         
         ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
-        TelaMenu criarBancoSQLite =  new TelaMenu(conexaoSQLite);
+       
         
-        criarBancoSQLite.criarTabelaUsuario();
-        criarBancoSQLite.criarTabelaVendedores();
-        criarBancoSQLite.criarTabelaClientes();
+        CriarTabelaClientes criarTabelaClientes = new CriarTabelaClientes();
+        CriarTabelaVendedores criarTabelaVendedores =  new CriarTabelaVendedores();
+        CriarTabelaUsuarios criarTabelaUsuarios =  new CriarTabelaUsuarios();
+        
+        criarTabelaClientes.criarTabelaClientes();
+        criarTabelaVendedores.criarTabelaVendedores();
+        criarTabelaUsuarios.criarTabelaUsuarios();
+        
+        if(criarTabelaUsuarios.checkUser("admin","admin")< 1){
+            criarTabelaUsuarios.insert(new Usuarios(0,"admin",String.valueOf("admin".hashCode())));
+        }
+        
+        
         
         
 
@@ -96,6 +117,16 @@ public class TelaLogin extends javax.swing.JDialog {
         jLabel4.setText("Senha");
 
         txtSenha.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSenhaActionPerformed(evt);
+            }
+        });
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
 
         jButton3.setText("Entrar");
         jButton3.setBorder(javax.swing.BorderFactory.createCompoundBorder());
@@ -173,10 +204,45 @@ public class TelaLogin extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-               JOptionPane.showMessageDialog(null, "Bem vindo!");
-               this.dispose();
+        
+        if(txtLogin.getText().equals("")){
+            
+            JOptionPane.showMessageDialog(null, "Preencha o usuário corretamente!");
+        }else if ( new String(txtSenha.getPassword()).equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha a senha corretamente!");
+        }else{
+            if(this.checkLogin(txtLogin.getText(), new String(txtSenha.getPassword()))){
+                
+                Login = txtLogin.getText();
+                JOptionPane.showMessageDialog(null, "Bem vindo!");
+                this.dispose();
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Dados inválidos!");
+            }
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+
+    }//GEN-LAST:event_txtSenhaActionPerformed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+
+          if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+                 if (this.checkLogin(txtLogin.getText(), new String(txtSenha.getPassword()))){
+                   Login = txtLogin.getText();
+                   JOptionPane.showMessageDialog(null, "Bem vindo!");
+                   this.dispose();
+
+
+               }else{
+                   JOptionPane.showMessageDialog(null, "Dados inválidos!");
+               }
+
+             }
+    }//GEN-LAST:event_txtSenhaKeyPressed
 
     /**
      * @param args the command line arguments

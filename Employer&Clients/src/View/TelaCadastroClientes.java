@@ -5,6 +5,13 @@
  */
 package View;
 
+import Conexoes.CriarTabelaClientes;
+import Conexoes.CriarTabelaVendedores;
+import Entidades.Clientes;
+import Entidades.Vendedores;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author julio
@@ -16,8 +23,18 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
      */
     public TelaCadastroClientes() {
         initComponents();
+        
+        CriarTabelaVendedores criarTabelaVendedores = new CriarTabelaVendedores();
+        
+        criarTabelaVendedores.getVendedorestxtNome().stream().forEach(s -> {
+        txtVendedor.addItem(s);
+        });
+    
     }
 
+  
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +48,6 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        txtNascimento = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -41,6 +57,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         txtObservacao = new javax.swing.JTextArea();
         txtTelefone1 = new javax.swing.JFormattedTextField();
         txtTelefone2 = new javax.swing.JFormattedTextField();
+        txtNascimento = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         txtRua = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -53,12 +70,11 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jClientes = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         txtDiaria = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        txtValorMensalidade = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         txtDataCobranca = new javax.swing.JFormattedTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -67,6 +83,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         txtDataVendaContrato = new javax.swing.JFormattedTextField();
         jLabel16 = new javax.swing.JLabel();
         txtNumeroContrato = new javax.swing.JTextField();
+        txtValorMensalidade = new javax.swing.JTextField();
 
         setClosable(true);
         setTitle("Cadastro de Clientes");
@@ -76,17 +93,6 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         jLabel1.setText("Nome");
 
         jLabel2.setText("Data de nascimento");
-
-        try {
-            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNascimentoActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Email");
 
@@ -112,6 +118,17 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
+        try {
+            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNascimentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -129,7 +146,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -153,15 +170,14 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -179,7 +195,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -204,7 +220,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Estado");
 
-        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Acre - AC", "Alagoas - AL", "Amapá - AP", "Amazonas - AM", "Bahia  - BA", "Ceará - CE", "Distrito Federal  - DF", "Espírito Santo - ES", "Goiás - GO", "Maranhão - MA", "Mato Grosso - MT", "Mato Grosso do Sul - MS", "Minas Gerais - MG", "Pará - PA", "Paraíba - PB", "Paraná - PR", "Pernambuco - PE", "Piauí - PI", "Rio de Janeiro - RJ", "Rio Grande do Norte - RN", "Rio Grande do Sul - RS", "Rondônia - RO", "Roraima - RR", "Santa Catarina - SC", "São Paulo - SP", "Sergipe - SE", "Tocantins - TO", " ", " ", " " }));
+        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -281,11 +297,12 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addGap(29, 29, 29)))
+                .addGap(28, 28, 28)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -293,7 +310,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                 "Nome", "Data de nascimento", "Telefone - 1", "Telefone - 2", "Email", "Observação", "Diárias", "Valor da Mensalidade", "Data da cobrança", "Vendedor", "Data de venda do contrato", "Número do contrato", "Rua", "Bairro", "Cidade", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(jClientes);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Contrato"));
 
@@ -303,21 +320,10 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
 
         jLabel12.setText("Valor da mensalidade");
 
-        try {
-            txtValorMensalidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("R$####,##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtValorMensalidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtValorMensalidadeActionPerformed(evt);
-            }
-        });
-
         jLabel13.setText("Data da cobrança");
 
         try {
-            txtDataCobranca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/####")));
+            txtDataCobranca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -329,7 +335,9 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
 
         jLabel14.setText("Vendedor");
 
-        txtVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        txtVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        txtVendedor.setSelectedItem("Selecione"
+        );
 
         jLabel15.setText("Data de venda do contrato");
 
@@ -340,6 +348,8 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         }
 
         jLabel16.setText("Número do contrato");
+
+        txtValorMensalidade.setText("R$");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -353,9 +363,9 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                             .addComponent(txtDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtValorMensalidade))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(txtValorMensalidade, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -364,8 +374,8 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel14)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtVendedor, 0, 157, Short.MAX_VALUE))
+                                .addGap(0, 113, Short.MAX_VALUE))
+                            .addComponent(txtVendedor, 0, 168, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -394,8 +404,8 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtValorMensalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataCobranca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtDataCobranca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtValorMensalidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -426,8 +436,8 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(5, 5, 5)
@@ -437,17 +447,106 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNascimentoActionPerformed
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void txtValorMensalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorMensalidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtValorMensalidadeActionPerformed
+        if (txtNome.getText().equals("")) {
+        
+        JOptionPane.showMessageDialog(null, "Preencha o nome corretamente!");
+        
+        }else if(txtNascimento.getText().equals("  /  /    ")){
+            txtNascimento.setText("00/00/0000");
+      
+        }else if(txtTelefone1.getText().equals("(  )      -    ")){
+            JOptionPane.showMessageDialog(null, "Preencha o Telefone 1 corretamente!");
+        
+        }else if(txtTelefone2.getText().equals("(  )      -    ")){
+           txtTelefone2.setText("(00) 00000-0000");
+           
+        }else if(txtEmail.getText().equals("")){
+           txtEmail.setText("Não informado");
+           
+        }else if(txtObservacao.getText().equals("")){
+           txtObservacao.setText("Não informado");
+           
+        }
+        else if(txtDiaria.getSelectedItem().toString().equals("Selecione")){
+           JOptionPane.showMessageDialog(null, "Preencha a Diária corretamente!");
+           
+        }else if(txtValorMensalidade.getText().equals("R$")){
+            txtValorMensalidade.setText("Não informado");
+            
+        }else if(txtDataCobranca.getText().equals("  /  ")){
+            txtDataCobranca.setText("00/00");
+            
+        }else if(txtVendedor.getSelectedItem().toString().equals("Selecione")){
+           JOptionPane.showMessageDialog(null, "Preencha o Vendedor corretamente!");
+           
+        }
+        else if(txtDataVendaContrato.getText().equals("  /  /    ")){
+            txtDataVendaContrato.setText("00/00/0000");
+            
+        }else if(txtNumeroContrato.getText().equals("")){
+           txtNumeroContrato.setText("Não informado");
+           
+        }
+        else if(txtRua.getText().equals("")){
+           txtRua.setText("Não informado");
+           
+         
+        }else if(txtBairro.getText().equals("")){
+           txtBairro.setText("Não informado");
+           
+         
+        }else if(txtCidade.getText().equals("")){
+           txtCidade.setText("Não informado");
+           
+        }
+        else if(txtEstado.getSelectedItem().toString().equals("Selecione")){
+           txtEstado.getModel().setSelectedItem("Não informado"); 
+        }
+        else{
+            DefaultTableModel dtmClientes = (DefaultTableModel) jClientes.getModel();
+            
+            Object[] dados = {txtNome.getText(),txtNascimento.getText(),
+            txtTelefone1.getText(),txtTelefone2.getText(),txtEmail.getText(),
+            txtObservacao.getText(),txtDiaria.getSelectedItem().toString(),txtValorMensalidade.getText(),
+            txtDataCobranca.getText(),txtVendedor.getSelectedItem().toString(),txtDataVendaContrato.getText(),
+            txtNumeroContrato.getText(),txtRua.getText(),txtBairro.getText(),txtCidade.getText(),
+            txtEstado.getSelectedItem().toString()
+        
+        };
+            
+        CriarTabelaClientes dao = new CriarTabelaClientes();
+        
+        dao.criarTabelaClientes();
+        
+        Clientes Clientes = new Clientes(
+            0,
+            txtNome.getText(),txtNascimento.getText(),
+            txtTelefone1.getText(),txtTelefone2.getText(),txtEmail.getText(),
+            txtObservacao.getText(),txtDiaria.getSelectedItem().toString(),txtValorMensalidade.getText(),
+            txtDataCobranca.getText(),txtVendedor.getSelectedItem().toString(),txtDataVendaContrato.getText(),
+            txtNumeroContrato.getText(),txtRua.getText(),txtBairro.getText(),txtCidade.getText(),
+            txtEstado.getSelectedItem().toString()
+        );
+        
+            System.out.println(txtObservacao.getText());
+            System.out.println(Clientes);
+            
+            dao.insert(Clientes);
+            
+            dtmClientes.addRow(dados);
+
+
+        }
+
+
+
+
+
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtBairroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBairroActionPerformed
         // TODO add your handling code here:
@@ -461,9 +560,14 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDataCobrancaActionPerformed
 
+    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNascimentoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JTable jClientes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -486,7 +590,6 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JFormattedTextField txtDataCobranca;
@@ -501,7 +604,7 @@ public class TelaCadastroClientes extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtRua;
     private javax.swing.JFormattedTextField txtTelefone1;
     private javax.swing.JFormattedTextField txtTelefone2;
-    private javax.swing.JFormattedTextField txtValorMensalidade;
+    private javax.swing.JTextField txtValorMensalidade;
     private javax.swing.JComboBox<String> txtVendedor;
     // End of variables declaration//GEN-END:variables
 }

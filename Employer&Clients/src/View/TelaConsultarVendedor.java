@@ -5,17 +5,83 @@
  */
 package View;
 
+import Conexoes.CriarTabelaVendedores;
+import Entidades.Vendedores;
+import java.util.ArrayList;
+import java.util.function.Consumer;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author julio
  */
-public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
+public class TelaConsultarVendedor extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form TelaConsultaVendedor
+     * Creates new form TelaConsultarVendedor
      */
-    public TelaConsultaVendedor() {
+    private DefaultTableModel dtmVendedores;
+    
+    private void atualizar (){
+        
+        txtID.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(), 0).toString());
+        txtNome.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(), 1).toString());;
+        txtNascimento.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(), 2).toString());
+        txtTelefone1.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(), 3).toString());
+        String Telefone2 = jVendedor.getValueAt(jVendedor.getSelectedRow(), 4).toString();
+        
+        if(!Telefone2.equals("(  )      -    ")){
+            txtTelefone2.setText(Telefone2);
+            
+        
+        }
+        else{
+            txtTelefone2.setText("(00) 00000-0000");
+        }
+        txtEmail.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(), 5).toString());
+        txtRG.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),6).toString());
+        txtCPF.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),7).toString());
+        txtObservacao.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),8).toString());
+        txtRua.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),9).toString());
+        txtBairro.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),10).toString());
+        txtCidade.setText(jVendedor.getValueAt(jVendedor.getSelectedRow(),11).toString());
+        txtEstado.setSelectedItem(jVendedor.getValueAt(jVendedor.getSelectedRow(),12).toString());
+        
+        
+    }
+    
+    public TelaConsultarVendedor() {
         initComponents();
+        
+        
+        this.dtmVendedores = (DefaultTableModel) jVendedor.getModel();
+        CriarTabelaVendedores CriarTabelaVendedores = new CriarTabelaVendedores();
+        
+        ArrayList<Vendedores> Vendedores = CriarTabelaVendedores.getVendedores();
+        
+         Consumer<Vendedores> consumer = s -> { 
+            Object[] dados = {
+                              s.getID(),
+                              s.gettxtNome(),
+                              s.gettxtNascimento(),
+                              s.gettxtTelefone1(),
+                              s.gettxtTelefone2(),
+                              s.gettxtEmail(),
+                              s.gettxtRG(),
+                              s.gettxtCPF(),
+                              s.gettxtObservacao(),
+                              s.gettxtRua(),
+                              s.gettxtBairro(),
+                              s.gettxtCidade(),
+                              s.gettxtEstado(),
+                              
+            };
+            dtmVendedores.addRow(dados);
+        }; 
+        Vendedores.stream().forEach(consumer);
+            
+        jVendedor.setModel(dtmVendedores);
+        
     }
 
     /**
@@ -28,16 +94,15 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtPesquisar = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
+        btLimpar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jVendedor = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        txtNascimento = new javax.swing.JFormattedTextField();
         jLabel22 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -51,6 +116,9 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
         txtRG = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         txtCPF = new javax.swing.JFormattedTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtID = new javax.swing.JLabel();
+        txtNascimento = new javax.swing.JFormattedTextField();
         jPanel5 = new javax.swing.JPanel();
         txtRua = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
@@ -69,41 +137,48 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nome");
 
-        jButton1.setText("Pesquisar");
-
-        jButton2.setText("Limpar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btPesquisarActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        btLimpar.setText("Limpar");
+        btLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btLimparActionPerformed(evt);
+            }
+        });
+
+        jVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "ID", "Nome", "Data de nascimento", "Telefone - 1", "Telefone - 2", "Email", "Observação", "Rua", "Bairro", "Cidade", "Estado"
+                "ID", "Nome", "Data de nascimento", "Telefone - 1", "Telefone - 2", "Email", "RG", "CPF", "Observação", "Rua", "Bairro", "Cidade", "Estado"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jVendedorMouseClicked(evt);
+            }
+        });
+        jVendedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jVendedorKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jVendedorKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jVendedor);
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados"));
 
         jLabel20.setText("Nome");
 
         jLabel21.setText("Data de nascimento");
-
-        try {
-            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNascimentoActionPerformed(evt);
-            }
-        });
 
         jLabel22.setText("Email");
 
@@ -151,6 +226,21 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
             ex.printStackTrace();
         }
 
+        jLabel2.setText("ID");
+
+        txtID.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        try {
+            txtNascimento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNascimentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -171,18 +261,24 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addComponent(jLabel22)
-                                .addGap(0, 181, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(txtEmail)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(jLabel20)
+                                .addComponent(jLabel2)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtNome))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel21)
-                            .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -201,15 +297,17 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel2))
+                .addGap(7, 7, 7)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtID, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel22)
@@ -223,7 +321,6 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                             .addComponent(jLabel23)
                             .addComponent(jLabel24))
                         .addGap(29, 29, 29)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel12))
@@ -260,7 +357,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
         jLabel29.setText("Estado");
 
-        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Acre - AC", "Alagoas - AL", "Amapá - AP", "Amazonas - AM", "Bahia  - BA", "Ceará - CE", "Distrito Federal  - DF", "Espírito Santo - ES", "Goiás - GO", "Maranhão - MA", "Mato Grosso - MT", "Mato Grosso do Sul - MS", "Minas Gerais - MG", "Pará - PA", "Paraíba - PB", "Paraná - PR", "Pernambuco - PE", "Piauí - PI", "Rio de Janeiro - RJ", "Rio Grande do Norte - RN", "Rio Grande do Sul - RS", "Rondônia - RO", "Roraima - RR", "Santa Catarina - SC", "São Paulo - SP", "Sergipe - SE", "Tocantins - TO", " ", " ", " " }));
+        txtEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
         txtEstado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEstadoActionPerformed(evt);
@@ -358,7 +455,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                 .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -375,11 +472,11 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
+                                .addComponent(btPesquisar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)))
+                                .addComponent(btLimpar)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -394,16 +491,16 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(txtPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar)
+                    .addComponent(btLimpar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 4, Short.MAX_VALUE))
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
@@ -411,13 +508,13 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLimparActionPerformed
 
-    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNascimentoActionPerformed
+        txtPesquisar.setText("");
+        btPesquisar.doClick();
+        
+
+    }//GEN-LAST:event_btLimparActionPerformed
 
     private void txtRuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRuaActionPerformed
         // TODO add your handling code here:
@@ -432,26 +529,119 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtCidadeActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+
+        CriarTabelaVendedores criarTabelaVendedores = new CriarTabelaVendedores();
+        dtmVendedores = (DefaultTableModel) jVendedor.getModel();
+        criarTabelaVendedores.delete(Integer.parseInt(txtID.getText()));
+        dtmVendedores.removeRow(jVendedor.getSelectedRow());
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+
+          Vendedores Vendedores = new Vendedores(
+           Integer.parseInt(txtID.getText()),
+           txtNome.getText(),
+           txtNascimento.getText(),
+           txtTelefone1.getText(),
+           txtTelefone2.getText(),
+           txtEmail.getText(),
+           txtRG.getText(),
+           txtCPF.getText(), 
+           txtObservacao.getText(), 
+           txtRua.getText(),
+           txtBairro.getText(),
+           txtCidade.getText(),
+           txtEstado.getSelectedItem().toString()
+           
+        );
+        
+        
+        CriarTabelaVendedores criarTabelaVendedores = new CriarTabelaVendedores();
+        
+        criarTabelaVendedores.update(Vendedores);
+        
+        jVendedor.setValueAt(txtNome.getText(), jVendedor.getSelectedRow(), 1);
+        jVendedor.setValueAt(txtNascimento.getText(), jVendedor.getSelectedRow(), 2);
+        jVendedor.setValueAt(txtTelefone1.getText(), jVendedor.getSelectedRow(), 3);
+        jVendedor.setValueAt(txtTelefone2.getText(), jVendedor.getSelectedRow(), 4);
+        jVendedor.setValueAt(txtEmail.getText(), jVendedor.getSelectedRow(), 5);
+        jVendedor.setValueAt(txtRG.getText(), jVendedor.getSelectedRow(), 6);
+        jVendedor.setValueAt(txtCPF.getText(), jVendedor.getSelectedRow(), 7);
+        jVendedor.setValueAt(txtObservacao.getText(), jVendedor.getSelectedRow(), 8);  
+        jVendedor.setValueAt(txtRua.getText(), jVendedor.getSelectedRow(), 9);
+        jVendedor.setValueAt(txtBairro.getText(), jVendedor.getSelectedRow(), 10);
+        jVendedor.setValueAt(txtCidade.getText(), jVendedor.getSelectedRow(), 11);
+        jVendedor.setValueAt(txtEstado.getSelectedItem(), jVendedor.getSelectedRow(), 12);
+      
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+
+        CriarTabelaVendedores CriarTabelaVendedores = new CriarTabelaVendedores();
+        DefaultTableModel dtm = (DefaultTableModel) jVendedor.getModel();
+        dtm.setRowCount(0);
+        ArrayList<Vendedores> VendedoresSearch = CriarTabelaVendedores.searchVendedores(txtPesquisar.getText());
+        VendedoresSearch.stream().forEach(s -> {
+            Object[] dados = {
+                              s.getID(),
+                              s.gettxtNome(),
+                              s.gettxtNascimento(),
+                              s.gettxtTelefone1(),
+                              s.gettxtTelefone2(),
+                              s.gettxtEmail(),
+                              s.gettxtRG(),
+                              s.gettxtCPF(),
+                              s.gettxtObservacao(),
+                              s.gettxtRua(),
+                              s.gettxtBairro(),
+                              s.gettxtCidade(),
+                              s.gettxtEstado(),
+            };
+            dtmVendedores.addRow(dados);
+        });
+
+
+
+
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
+    private void jVendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jVendedorKeyPressed
+
+        
+
+
+    }//GEN-LAST:event_jVendedorKeyPressed
+
+    private void jVendedorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jVendedorKeyReleased
+
+        atualizar();
+    }//GEN-LAST:event_jVendedorKeyReleased
+
+    private void jVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jVendedorMouseClicked
+
+        atualizar();
+
+    }//GEN-LAST:event_jVendedorMouseClicked
+
+    private void txtNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNascimentoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btLimpar;
+    private javax.swing.JButton btPesquisar;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -467,16 +657,17 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jVendedor;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCPF;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JComboBox<String> txtEstado;
+    private javax.swing.JLabel txtID;
     private javax.swing.JFormattedTextField txtNascimento;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextArea txtObservacao;
+    private javax.swing.JTextField txtPesquisar;
     private javax.swing.JFormattedTextField txtRG;
     private javax.swing.JTextField txtRua;
     private javax.swing.JFormattedTextField txtTelefone1;

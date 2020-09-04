@@ -5,6 +5,11 @@
  */
 package View;
 
+import Conexoes.ConexaoSQLite;
+import Entidades.Usuarios;
+import Conexoes.CriarTabelaUsuarios;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author julio
@@ -33,11 +38,11 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
 
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        Login = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        Senha = new javax.swing.JPasswordField();
+        ConfirmarSenha = new javax.swing.JPasswordField();
         jLabel3 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
 
@@ -48,9 +53,9 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados"));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        Login.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                LoginActionPerformed(evt);
             }
         });
 
@@ -58,15 +63,15 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Senha");
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        Senha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                SenhaActionPerformed(evt);
             }
         });
 
-        jPasswordField2.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmarSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField2ActionPerformed(evt);
+                ConfirmarSenhaActionPerformed(evt);
             }
         });
 
@@ -99,9 +104,9 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jPasswordField1)
-                                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(Login)
+                                    .addComponent(Senha)
+                                    .addComponent(ConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,15 +115,15 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
@@ -138,32 +143,78 @@ public class TelaCadastroUsuário extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void SenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_SenhaActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+
+          if (Login.getText().equals("")) {
+
+            JOptionPane.showMessageDialog(null, "Preencha o Login corretamente!");
+
+
+        }else if (Senha.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Preencha a Senha corretamente!");
+
+
+        }else if (ConfirmarSenha.getText().equals("")){
+
+            JOptionPane.showMessageDialog(null, "Preencha a Confirmar Senha corretamente!");
+
+        }else if (!ConfirmarSenha.getText().equals(Senha.getText())){
+
+            JOptionPane.showMessageDialog(null, "Preencha a Confirmar Senha corretamente!");
+
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "Usuário cadastrado!");
+        }
+          
+        ConexaoSQLite conexaoSQLite = new ConexaoSQLite();
+        
+        CriarTabelaUsuarios criarTabelaUsuarios = new CriarTabelaUsuarios();
+        
+        criarTabelaUsuarios.criarTabelaUsuarios();
+        
+        Usuarios Usuarios = new Usuarios (
+                                    0,
+                                    Login.getText(),
+                                    String.valueOf(Senha.getText().hashCode()));
+        
+        conexaoSQLite.conectar();
+        criarTabelaUsuarios.insert(Usuarios);
+        conexaoSQLite.desconectar();
+
+
+
+
+
+
+
+
+
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_LoginActionPerformed
 
-    private void jPasswordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField2ActionPerformed
+    private void ConfirmarSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmarSenhaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField2ActionPerformed
+    }//GEN-LAST:event_ConfirmarSenhaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField ConfirmarSenha;
+    private javax.swing.JTextField Login;
+    private javax.swing.JPasswordField Senha;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
