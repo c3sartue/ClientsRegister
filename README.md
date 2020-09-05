@@ -1,7 +1,8 @@
 Employers & Clients - É basicamente um sistema para registros de Vendedores e clientes. O sistema também conta com a exportação de seus dados em um relatório em PDF.
 
 Os usuários poderão:
-  Logar na platafoma com o usúario padrão (Login: admin Senha: admin).
+    
+    Logar na platafoma com o usúario padrão (Login: admin Senha: admin).
   
   Criar usúarios para usar o sistema:
   
