@@ -4,10 +4,12 @@ Os usuários poderão:
   Logar na platafoma com o usúario padrão (Login: admin Senha: admin).
   
   Criar usúarios para usar o sistema:
+  
     Login
     Senha
     
   Cadastrar ,alterar e excluir Vendedores e Clientes.
+  
     Vendedores
       Nome
       Data de Nascimento
@@ -41,16 +43,19 @@ Os usuários poderão:
       Estado
       
 Filtrar a partir dos campos e gerar um relatório em PDF:
-  Vendedor
-  Mês
+
+    Vendedor
+    Mês
 
 Linguagens utilizadas:
-  Java
-  Sqlite3
+
+    Java
+    Sqlite3
   
 Bibliotecas:
-  itextpdf-5.5.13.1
-  sqlite-jdbc-3.32.3
+
+    itextpdf-5.5.13.1
+    sqlite-jdbc-3.32.3
       
     
       
