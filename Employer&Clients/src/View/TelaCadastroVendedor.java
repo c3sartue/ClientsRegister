@@ -372,7 +372,7 @@ public class TelaCadastroVendedor extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Preencha o Nome corretamente!");
             
         }else if(txtNascimento.getText().equals("  /  /    ")){
-            txtNascimento.setText("Não informado");
+            txtNascimento.setText("00/00/0000");
       
         }else if(txtTelefone1.getText().equals("(  )      -    ")){
             JOptionPane.showMessageDialog(null, "Preencha o Telefone 1 corretamente!");

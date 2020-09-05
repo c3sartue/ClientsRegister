@@ -15,6 +15,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Label;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -22,9 +23,11 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -38,7 +41,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
     ArrayList<Clientes> Clientes;
     
     ArrayList<JTextField> ClientesFields = new ArrayList<>();
-    ArrayList<JTextField> DataCobrancaFields = new ArrayList<>();
+    ArrayList<JFormattedTextField> DataCobrancaFields = new ArrayList<>();
     ArrayList<JComboBox> VendedorComboBoxes = new ArrayList<>();
     
     private String addTildeOptions(String search) {
@@ -52,26 +55,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
                              .replace("?", "[?]");
     }
     
-    private String getQueryCB(ArrayList<JComboBox> comboBox, String tbl) {
-        int idx = 0;
-        String query = "( ";
-//        for (JComboBox cbAlcance: comboBox){
-//            if(!cbAlcance.getSelectedItem().toString().trim().equals("")){
-//                if(idx > 0){
-//                query += " or ";
-//            }
-//            query += "lower(" + tbl + ") glob '*" + addTildeOptions(cbAlcance.getSelectedItem().toString()) + "*'"; 
-//            idx++;
-//            }
-//        }
-        query += " )";
-        if(query.equals("(  )")){
-            return "";
-        }
-        return query;
-    }
-    
-     
+
      private String agregarQueries(String[] Queries){
         int idx = 0;
         String queryCompose = "";
@@ -86,7 +70,10 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
             }
         }
         return queryCompose;
+        
     }
+     
+     
      
      private String getQueryTF(ArrayList<JTextField> textFields, String tbl) {
         int idx = 0;
@@ -106,6 +93,56 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
         }
         return query;
     }
+         private String getQueryCB(ArrayList<JComboBox> comboBox, String tbl) {
+        int idx = 0;
+        String query = "( ";
+        for (JComboBox cbValue: comboBox){
+            if(!cbValue.getSelectedItem().toString().trim().equals("")){
+                if(idx > 0){
+                query += " or ";
+            }
+            query += "lower(" + tbl + ") glob '*" + addTildeOptions(cbValue.getSelectedItem().toString()) + "*'"; 
+            idx++;
+            }
+        }
+        query += " )";
+        if(query.equals("(  )")){
+            return "";
+        }
+        return query;
+    }
+     
+     private String getQueryFT(ArrayList<JFormattedTextField> formatedText, String tbl) {
+        int idx = 0;
+        String query = "( ";
+        for (JFormattedTextField ft: formatedText){
+            if(!ft.getText().trim().equals("")){
+                if(idx > 0){
+                query += " or ";
+            }
+            query += "lower(" + tbl + ") glob '*" + addTildeOptions(ft.getText()) + "*'"; 
+            idx++;
+            }
+        }
+        query += " )";
+        if(query.equals("(  )")){
+            return "";
+        }
+        return query;
+    }
+     
+//       new JFormattedTextField(new MaskFormatter("(###) ###-####"));
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
     
      private void addFilters(){
          
@@ -115,15 +152,19 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
          jFilters.add(txtClientes);
          ClientesFields.add(txtClientes);
          
-         JTextField txtDataCobranca = new JTextField();
-         jFilters.add(txtDataCobranca);
-         DataCobrancaFields.add(txtDataCobranca);
-         
          JComboBox comboboxVendedor = new JComboBox();
-         DefaultComboBoxModel modelVendedor = new DefaultComboBoxModel(criarTabelaVendedores.getVendedorestxtNome().toArray());
+         ArrayList<String> criarModel0 =  criarTabelaVendedores.getVendedorestxtNome();
+         criarModel0.add(0,"");
+         DefaultComboBoxModel modelVendedor = new DefaultComboBoxModel(criarModel0.toArray());
          comboboxVendedor.setModel(modelVendedor);
          jFilters.add(comboboxVendedor);
          VendedorComboBoxes.add(comboboxVendedor);
+         
+         JFormattedTextField txtDataCobranca = new JFormattedTextField();
+         jFilters.add(txtDataCobranca);
+         DataCobrancaFields.add(txtDataCobranca);
+         
+        
             
      }
     
@@ -229,17 +270,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtros"));
 
-        javax.swing.GroupLayout jFiltersLayout = new javax.swing.GroupLayout(jFilters);
-        jFilters.setLayout(jFiltersLayout);
-        jFiltersLayout.setHorizontalGroup(
-            jFiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 977, Short.MAX_VALUE)
-        );
-        jFiltersLayout.setVerticalGroup(
-            jFiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
+        jFilters.setLayout(new java.awt.GridLayout(0, 3, 4, 4));
         jScrollFilters.setViewportView(jFilters);
 
         btAddFilters.setText("+ Adicionar Filtro");
@@ -256,6 +287,13 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
             }
         });
 
+        btCreatePdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/pdf.png"))); // NOI18N
+        btCreatePdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCreatePdfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -265,8 +303,12 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
                 .addComponent(jScrollFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 989, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btAddFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btAddFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btCreatePdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -276,43 +318,33 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btAddFilters)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btFilter)))
+                        .addComponent(btFilter)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCreatePdf)))
                 .addGap(0, 13, Short.MAX_VALUE))
         );
-
-        btCreatePdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/pdf.png"))); // NOI18N
-        btCreatePdf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCreatePdfActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btCreatePdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btCreatePdf)))
-                .addGap(49, 49, 49)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pack();
@@ -337,10 +369,14 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
 
     CriarTabelaClientes criarTabelaClientes = new CriarTabelaClientes();
+    
+//    System.out.println(VendedorComboBoxes);
+        
     String [] queries = {
-        getQueryTF(ClientesFields,"Nome"),
-        getQueryTF(DataCobrancaFields,"Data Cobrança"),
-        getQueryCB(VendedorComboBoxes, "Vendedor"),
+        getQueryTF(ClientesFields,"txtNome"),
+        getQueryCB(VendedorComboBoxes, "txtVendedor"),
+        getQueryFT(DataCobrancaFields,"txtDataCobranca"),
+       
         
         
     };
@@ -379,7 +415,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
         this.Clientes = clientesReturn;
         
         jClientes.setModel(dtmClientes);
-        JOptionPane.showMessageDialog(null, "Formulário gerado!");
+        
      
     }//GEN-LAST:event_btFilterActionPerformed
 
@@ -431,8 +467,9 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
         } catch (FileNotFoundException | DocumentException ex) {
             Logger.getLogger(TelaGerarRelatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         doc.close();
+        JOptionPane.showMessageDialog(null, "Formulário gerado!");
 
     }//GEN-LAST:event_btCreatePdfActionPerformed
 
