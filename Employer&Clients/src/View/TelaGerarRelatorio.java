@@ -52,7 +52,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
                              .replace("?", "[?]");
     }
     
-      private String getQueryCB(ArrayList<JComboBox> comboBox, String tbl) {
+    private String getQueryCB(ArrayList<JComboBox> comboBox, String tbl) {
         int idx = 0;
         String query = "( ";
 //        for (JComboBox cbAlcance: comboBox){
@@ -111,19 +111,19 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
          
          CriarTabelaVendedores criarTabelaVendedores = new CriarTabelaVendedores();
          
-         JTextField Clientes = new JTextField();
-         jFilters.add(Clientes);
-         ClientesFields.add(Clientes);
+         JTextField txtClientes = new JTextField();
+         jFilters.add(txtClientes);
+         ClientesFields.add(txtClientes);
          
-         JTextField DataCobranca = new JTextField();
-         jFilters.add(DataCobranca);
-         DataCobrancaFields.add(DataCobranca);
+         JTextField txtDataCobranca = new JTextField();
+         jFilters.add(txtDataCobranca);
+         DataCobrancaFields.add(txtDataCobranca);
          
-         JComboBox Vendedor = new JComboBox();
+         JComboBox comboboxVendedor = new JComboBox();
          DefaultComboBoxModel modelVendedor = new DefaultComboBoxModel(criarTabelaVendedores.getVendedorestxtNome().toArray());
-         Vendedor.setModel(modelVendedor);
-         jFilters.add(Vendedor);
-         VendedorComboBoxes.add(Vendedor);
+         comboboxVendedor.setModel(modelVendedor);
+         jFilters.add(comboboxVendedor);
+         VendedorComboBoxes.add(comboboxVendedor);
             
      }
     
@@ -199,6 +199,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jClientes = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
+        jScrollFilters = new javax.swing.JScrollPane();
         jFilters = new javax.swing.JPanel();
         btAddFilters = new javax.swing.JButton();
         btFilter = new javax.swing.JButton();
@@ -228,18 +229,18 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtros"));
 
-        jFilters.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         javax.swing.GroupLayout jFiltersLayout = new javax.swing.GroupLayout(jFilters);
         jFilters.setLayout(jFiltersLayout);
         jFiltersLayout.setHorizontalGroup(
             jFiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGap(0, 977, Short.MAX_VALUE)
         );
         jFiltersLayout.setVerticalGroup(
             jFiltersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 66, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jScrollFilters.setViewportView(jFilters);
 
         btAddFilters.setText("+ Adicionar Filtro");
         btAddFilters.addActionListener(new java.awt.event.ActionListener() {
@@ -255,6 +256,30 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 989, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btAddFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollFilters, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btAddFilters)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btFilter)))
+                .addGap(0, 13, Short.MAX_VALUE))
+        );
+
         btCreatePdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Icons/pdf.png"))); // NOI18N
         btCreatePdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,53 +287,30 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btAddFilters, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCreatePdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(565, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jFilters, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btCreatePdf)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btAddFilters)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btFilter)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btCreatePdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(btCreatePdf)))
+                .addGap(49, 49, 49)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -337,7 +339,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
     CriarTabelaClientes criarTabelaClientes = new CriarTabelaClientes();
     String [] queries = {
         getQueryTF(ClientesFields,"Nome"),
-        getQueryTF(DataCobrancaFields,"DataCobranca"),
+        getQueryTF(DataCobrancaFields,"Data Cobrança"),
         getQueryCB(VendedorComboBoxes, "Vendedor"),
         
         
@@ -442,6 +444,7 @@ public class TelaGerarRelatorio extends javax.swing.JInternalFrame {
     private javax.swing.JTable jClientes;
     private javax.swing.JPanel jFilters;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollFilters;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 }

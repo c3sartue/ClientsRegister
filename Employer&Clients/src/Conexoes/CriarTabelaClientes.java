@@ -146,6 +146,10 @@ public class CriarTabelaClientes {
       
       public ArrayList<Clientes> getClientes(String query){
           
+          if(query.equals("")){
+              return this.getClientes();
+          }
+          
           ResultSet resultSet = null;
           Statement statement = null;
           
