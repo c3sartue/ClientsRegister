@@ -50,7 +50,7 @@ Filtrar a partir dos campos e gerar um relatório em PDF:
     Vendedor
     Mês
 
-Linguagens utilizadas:
+Linguagens e Frameworks utilizados:
 
     Java
     Sqlite3
