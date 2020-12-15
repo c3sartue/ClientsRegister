@@ -1,6 +1,6 @@
 # Clients Register
 
-Employers & Clients - É basicamente um sistema para registros de Vendedores e clientes. O sistema também conta com a exportação de seus dados em um relatório em PDF.
+Clients Register - É basicamente um sistema para registros de Vendedores e clientes. O sistema também conta com a exportação de seus dados em um relatório em PDF.
 
 Os usuários poderão:
     
