@@ -82,11 +82,10 @@ public class TelaLogin extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtLogin = new javax.swing.JTextField();
+        jTextField_Username = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtSenha = new javax.swing.JPasswordField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -94,7 +93,6 @@ public class TelaLogin extends javax.swing.JDialog {
         setBackground(new java.awt.Color(106, 165, 231));
         setForeground(new java.awt.Color(16, 90, 40));
         setUndecorated(true);
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(250, 250, 250));
         jPanel1.setAlignmentX(0.0F);
@@ -109,16 +107,26 @@ public class TelaLogin extends javax.swing.JDialog {
         jLabel2.setText("Clients Register");
         jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        txtLogin.setBackground(new java.awt.Color(158, 26, 178));
-        txtLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtLogin.setBorder(new javax.swing.border.MatteBorder(null));
-        txtLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        txtLogin.setDisabledTextColor(new java.awt.Color(192, 230, 222));
-        txtLogin.setSelectedTextColor(new java.awt.Color(192, 230, 222));
-        txtLogin.addActionListener(new java.awt.event.ActionListener() {
+        jTextField_Username.setBackground(new java.awt.Color(158, 26, 178));
+        jTextField_Username.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextField_Username.setForeground(new java.awt.Color(173, 173, 173));
+        jTextField_Username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField_Username.setText("Usuario");
+        jTextField_Username.setBorder(new javax.swing.border.MatteBorder(null));
+        jTextField_Username.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jTextField_Username.setDisabledTextColor(new java.awt.Color(192, 230, 222));
+        jTextField_Username.setSelectedTextColor(new java.awt.Color(192, 230, 222));
+        jTextField_Username.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField_UsernameFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField_UsernameFocusLost(evt);
+            }
+        });
+        jTextField_Username.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLoginActionPerformed(evt);
+                jTextField_UsernameActionPerformed(evt);
             }
         });
 
@@ -126,7 +134,9 @@ public class TelaLogin extends javax.swing.JDialog {
         jLabel3.setText("Login");
 
         txtSenha.setBackground(new java.awt.Color(158, 26, 178));
+        txtSenha.setForeground(new java.awt.Color(173, 173, 173));
         txtSenha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtSenha.setText("Senha");
         txtSenha.setBorder(new javax.swing.border.MatteBorder(null));
         txtSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,11 +152,7 @@ public class TelaLogin extends javax.swing.JDialog {
         jPanel2.setBackground(new java.awt.Color(8, 127, 140));
         jPanel2.setAlignmentX(0.0F);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/logo grande.png"))); // NOI18N
-        jLabel5.setText("jLabel5");
-        jLabel5.setToolTipText("logo esquerda");
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/x1.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/desligar.png"))); // NOI18N
         jLabel6.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 jLabel6MouseMoved(evt);
@@ -165,20 +171,14 @@ public class TelaLogin extends javax.swing.JDialog {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(218, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(113, 113, 113))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 599, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -222,13 +222,13 @@ public class TelaLogin extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(339, 339, 339))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,10 +240,10 @@ public class TelaLogin extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
@@ -256,7 +256,9 @@ public class TelaLogin extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +274,6 @@ public class TelaLogin extends javax.swing.JDialog {
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             if (this.checkLogin(txtLogin.getText(), new String(txtSenha.getPassword()))){
                 Login = txtLogin.getText();
-                JOptionPane.showMessageDialog(null, "Bem vindo!");
                 this.dispose();
 
             }else{
@@ -286,9 +287,9 @@ public class TelaLogin extends javax.swing.JDialog {
 
     }//GEN-LAST:event_txtSenhaActionPerformed
 
-    private void txtLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginActionPerformed
+    private void jTextField_UsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_UsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtLoginActionPerformed
+    }//GEN-LAST:event_jTextField_UsernameActionPerformed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
         if(txtLogin.getText().equals("Windows")){
@@ -300,7 +301,6 @@ public class TelaLogin extends javax.swing.JDialog {
             if(this.checkLogin(txtLogin.getText(), new String(txtSenha.getPassword()))){
 
                 Login = txtLogin.getText();
-                JOptionPane.showMessageDialog(null, "Bem vindo!");
                 this.dispose();
 
             }else{
@@ -347,12 +347,20 @@ public class TelaLogin extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/x1.png")));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/desligar.png")));
     }//GEN-LAST:event_jLabel6MouseExited
 
     private void jLabel6MouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseMoved
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/x2.png")));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logos/desligar1.png")));
     }//GEN-LAST:event_jLabel6MouseMoved
+
+    private void jTextField_UsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_UsernameFocusGained
+   
+    }//GEN-LAST:event_jTextField_UsernameFocusGained
+
+    private void jTextField_UsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField_UsernameFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField_UsernameFocusLost
 
     /**
      * @param args the command line arguments
@@ -397,11 +405,10 @@ public class TelaLogin extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtLogin;
+    private javax.swing.JTextField jTextField_Username;
     private javax.swing.JPasswordField txtSenha;
     // End of variables declaration//GEN-END:variables
 }
